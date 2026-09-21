@@ -692,75 +692,332 @@
       text-transform:uppercase;
       letter-spacing:2px;
     }
+.mobile-hint{
+  display:none;
+}
+   /* =========================================
+   RESPONSIVE - CELULARES
+========================================= */
 
-    @media (max-width:700px){
-      .panel-content{
-        padding:22px;
-      }
+@media (max-width:700px){
 
-      .text,
-      .message-text{
-        font-size:16px;
-      }
+  .desktop-hint{
+  display:none;
+}
 
-      .buttons{
-        flex-direction:column;
-      }
+.mobile-hint{
+  display:inline;
+}
+  /* Evita desbordamientos */
+  html,
+  body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+  }
 
-      .btn{
-        width:100%;
-      }
+  /* En móvil no obligamos a cada pantalla
+     a medir exactamente toda la pantalla */
+  section{
+    min-height:100svh;
+    padding:24px 12px;
+  }
 
-      .message-text{
-        min-height:340px;
-      }
+  /* Panel principal */
+  .panel{
+    width:100%;
+    max-width:100%;
+  }
 
-      .sunflower-zone{
-        min-height:430px;
-      }
+  .panel-content{
+    padding:22px 17px;
+  }
 
-      .sunflower-scene{
-        width:260px;
-        height:370px;
-      }
 
-      .sunflower-head{
-        width:165px;
-        height:165px;
-      }
+  /* =========================
+     CABECERA ANIMUS
+  ========================= */
 
-      .petal{
-        width:28px;
-        height:78px;
-        margin-left:-14px;
-        margin-top:-69px;
-      }
+  .top-tags{
+    gap:7px;
+    margin-bottom:22px;
+    justify-content:flex-start;
+  }
 
-      .center-ring{
-        width:94px;
-        height:94px;
-      }
+  .tag{
+    padding:7px 9px;
+    font-size:9px;
+    letter-spacing:1.3px;
+  }
 
-      .center-core{
-        width:54px;
-        height:54px;
-      }
+  .label{
+    font-size:10px;
+    letter-spacing:3px;
+    line-height:1.6;
+  }
 
-      .stem{
-        top:184px;
-        height:160px;
-      }
 
-      .leaf.left{
-        left:58px;
-        top:270px;
-      }
+  /* =========================
+     TÍTULOS
+  ========================= */
 
-      .leaf.right{
-        right:58px;
-        top:295px;
-      }
-    }
+  h1{
+    font-size:clamp(38px,13vw,58px);
+    line-height:1.05;
+    margin-bottom:16px;
+  }
+
+  h2{
+    font-size:clamp(29px,9vw,43px);
+    line-height:1.1;
+  }
+
+
+  /* =========================
+     TEXTO
+  ========================= */
+
+  .text,
+  .message-text{
+    font-size:15.5px;
+    line-height:1.75;
+  }
+
+  .message-text{
+    min-height:0;
+    margin-top:14px;
+  }
+
+  .signature{
+    font-size:16px;
+  }
+
+
+  /* =========================
+     BOTONES
+  ========================= */
+
+  .buttons{
+    flex-direction:column;
+    gap:10px;
+    margin-top:24px;
+  }
+
+  .btn{
+    width:100%;
+    min-width:0;
+    padding:14px 15px;
+    font-size:11px;
+    letter-spacing:1.5px;
+  }
+
+
+  /* =========================
+     BARRA DE SINCRONIZACIÓN
+  ========================= */
+
+  .progress-header{
+    font-size:10px;
+    letter-spacing:1.3px;
+  }
+
+  .status{
+    font-size:12px;
+    line-height:1.5;
+  }
+
+  .sync-done{
+    font-size:10px;
+    letter-spacing:3px;
+  }
+
+  .sync-done-bar{
+    width:80%;
+    max-width:290px;
+  }
+
+
+  /* =========================
+     GIRASOL
+  ========================= */
+
+  .sunflower-zone{
+    width:100%;
+    min-height:350px;
+    margin:5px auto 5px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+
+  .sunflower-scene{
+    width:230px;
+    height:330px;
+  }
+
+  .sunflower-head{
+    width:150px;
+    height:150px;
+
+    left:50%;
+    top:105px;
+
+    transform:translateX(-50%);
+  }
+
+  .sunflower-glow{
+    width:150px;
+    height:150px;
+
+    left:50%;
+    top:105px;
+  }
+
+  .petal{
+    width:26px;
+    height:70px;
+
+    margin-left:-13px;
+    margin-top:-62px;
+  }
+
+  .center-ring{
+    width:86px;
+    height:86px;
+    border-width:3px;
+  }
+
+  .center-core{
+    width:48px;
+    height:48px;
+  }
+
+  .stem{
+    top:170px;
+    width:14px;
+    height:135px;
+  }
+
+  .leaf{
+    width:70px;
+    height:36px;
+  }
+
+  .leaf.left{
+    left:45px;
+    top:240px;
+  }
+
+  .leaf.right{
+    right:45px;
+    top:265px;
+  }
+
+  .ground{
+    width:180px;
+    bottom:15px;
+  }
+
+
+  /* =========================
+     TEXTO DEBAJO DEL GIRASOL
+  ========================= */
+
+  .sunflower-hint{
+    margin-top:0;
+    padding:0 8px;
+
+    font-size:11px;
+    line-height:1.6;
+    letter-spacing:.7px;
+  }
+
+  .sunflower-note{
+    font-size:13px;
+    line-height:1.6;
+    padding:0 5px;
+  }
+
+
+  /* =========================
+     FINAL
+  ========================= */
+
+  .final-card .text{
+    font-size:15px;
+    line-height:1.7;
+  }
+
+  footer{
+    font-size:9px;
+    letter-spacing:1.5px;
+    padding:18px 10px 24px;
+  }
+}
+
+
+/* =========================================
+   CELULARES MUY PEQUEÑOS
+   iPhone SE / Android pequeños
+========================================= */
+
+@media (max-width:390px){
+
+  section{
+    padding:18px 9px;
+  }
+
+  .panel-content{
+    padding:19px 14px;
+  }
+
+  h1{
+    font-size:36px;
+  }
+
+  h2{
+    font-size:28px;
+  }
+
+  .text,
+  .message-text{
+    font-size:14.5px;
+  }
+
+  .tag{
+    font-size:8px;
+  }
+
+  .sunflower-zone{
+    min-height:320px;
+  }
+
+  .sunflower-scene{
+    transform:scale(.90);
+  }
+}
+
+
+/* =========================================
+   CELULAR EN HORIZONTAL
+========================================= */
+
+@media (max-height:500px) and (orientation:landscape){
+
+  section{
+    min-height:auto;
+    padding:25px 15px;
+  }
+
+  .sunflower-zone{
+    min-height:300px;
+  }
+
+  .sunflower-scene{
+    transform:scale(.8);
+  }
+}
   </style>
 </head>
 <body>
@@ -888,8 +1145,14 @@
         </div>
 
         <div class="sunflower-hint">
+        <span class="desktop-hint">
           Mueve el cursor cerca del girasol y haz clic en su centro.
-        </div>
+        </span>
+
+        <span class="mobile-hint">
+          Toca el centro del girasol para revelar el último fragmento.
+        </span>
+      </div>
 
         <div class="sunflower-note" id="sunflowerNote">
           FRAGMENTO REVELADO // Para Gaby: que tus días sigan teniendo luz, color y motivos bonitos para sonreír. — Nacho
