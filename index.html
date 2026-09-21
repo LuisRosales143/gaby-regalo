@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Gaby, de Nacho</title>
+
+  <style>
+    :root{
+      --bg1:#03070d;
+      --bg2:#08111c;
+      --bg3:#101a28;
+      --hud:#8edfff;
+      --hud-soft:rgba(142,223,255,.16);
+      --hud-line:rgba(142,223,255,.28);
+      --gold:#f2c94c;
+      --gold-2:#f4d96b;
+      --gold-soft:rgba(242,201,76,.18);
+      --text:rgba(255,255,255,.88);
+      --muted:rgba(255,255,255,.65);
+      --panel:rgba(5,13,22,.72);
+      --panel-2:rgba(8,18,28,.82);
+      --border:rgba(255,255,255,.08);
+      --ok:#d7f5ff;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      min-height:100vh;
+      overflow-x:hidden;
+      color:white;
+      background:
+        radial-gradient(circle at top, #132537 0%, #08111a 35%, #02050a 100%);
+      position:relative;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size:38px 38px;
+      opacity:.35;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,.018) 0px,
+        rgba(255,255,255,.018) 1px,
+        transparent 2px,
+        transparent 6px
+      );
+      opacity:.22;
+      pointer-events:none;
+      z-index:0;
+      animation:flicker 6s linear infinite;
+    }
+
+    @keyframes flicker{
+      0%,100%{opacity:.18}
+      50%{opacity:.28}
+    }
+
+    .particles,
+    .flowers{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:1;
+    }
+
+    .particle{
+      position:absolute;
+      width:2px;
+      height:2px;
+      border-radius:50%;
+      background:rgba(142,223,255,.78);
+      box-shadow:0 0 12px rgba(142,223,255,.9);
+      animation:floatUp linear infinite;
+    }
+
+    @keyframes floatUp{
+      from{
+        transform:translateY(20vh) scale(.8);
+        opacity:0;
+      }
+      20%{opacity:1}
+      to{
+        transform:translateY(-120vh) scale(1.2);
+        opacity:0;
+      }
+    }
+
+    .flower-particle{
+      position:absolute;
+      top:-60px;
+      width:10px;
+      height:10px;
+      opacity:.8;
+      animation:fall linear forwards;
+      filter:drop-shadow(0 0 10px rgba(242,201,76,.25));
+    }
+
+    .flower-particle::before,
+    .flower-particle::after{
+      content:"";
+      position:absolute;
+      border-radius:50%;
+    }
+
+    .flower-particle::before{
+      inset:0;
+      background:#f0c63b;
+      box-shadow:
+        8px 0 0 #f0c63b,
+        -8px 0 0 #f0c63b,
+        0 8px 0 #f0c63b,
+        0 -8px 0 #f0c63b;
+    }
+
+    .flower-particle::after{
+      width:8px;
+      height:8px;
+      left:1px;
+      top:1px;
+      background:#5b3411;
+    }
+
+    @keyframes fall{
+      from{
+        transform:translateY(-100px) rotate(0deg);
+        opacity:0;
+      }
+      10%{opacity:.85}
+      to{
+        transform:translateY(115vh) rotate(360deg);
+        opacity:0;
+      }
+    }
+
+    section{
+      position:relative;
+      z-index:2;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px 18px;
+    }
+
+    .panel{
+      width:min(940px,100%);
+      background:var(--panel);
+      border:1px solid var(--hud-soft);
+      backdrop-filter:blur(8px);
+      position:relative;
+      overflow:hidden;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.025) inset,
+        0 20px 80px rgba(0,0,0,.42);
+    }
+
+    .panel::before,
+    .panel::after{
+      content:"";
+      position:absolute;
+      width:24px;
+      height:24px;
+      border-color:var(--hud);
+      opacity:.8;
+    }
+
+    .panel::before{
+      top:14px;
+      left:14px;
+      border-top:2px solid;
+      border-left:2px solid;
+    }
+
+    .panel::after{
+      right:14px;
+      bottom:14px;
+      border-right:2px solid;
+      border-bottom:2px solid;
+    }
+
+    .panel-content{
+      padding:30px;
+    }
+
+    .top-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:space-between;
+      margin-bottom:26px;
+    }
+
+    .tag{
+      padding:8px 12px;
+      font-size:11px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:var(--hud);
+      border:1px solid rgba(142,223,255,.24);
+      background:rgba(142,223,255,.06);
+    }
+
+    .label{
+      color:var(--hud);
+      letter-spacing:5px;
+      text-transform:uppercase;
+      font-size:12px;
+      margin-bottom:14px;
+    }
+
+    h1,h2{
+      font-family:Georgia, "Times New Roman", serif;
+      font-weight:normal;
+      line-height:1.08;
+    }
+
+    h1{
+      font-size:clamp(38px,7vw,84px);
+      margin-bottom:18px;
+    }
+
+    h2{
+      font-size:clamp(30px,5vw,54px);
+      margin-bottom:16px;
+    }
+
+    .gold{
+      color:var(--gold);
+      text-shadow:0 0 24px rgba(242,201,76,.16);
+    }
+
+    .text{
+      max-width:730px;
+      color:var(--text);
+      font-size:18px;
+      line-height:1.9;
+    }
+
+    .muted{
+      color:var(--muted);
+    }
+
+    .line{
+      width:100%;
+      height:1px;
+      margin:22px 0;
+      background:linear-gradient(90deg, transparent, var(--hud), transparent);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .line.gold-line{
+      background:linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .line::after{
+      content:"";
+      position:absolute;
+      top:0;
+      left:-20%;
+      width:20%;
+      height:100%;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.85), transparent);
+      animation:scanX 3s linear infinite;
+    }
+
+    @keyframes scanX{
+      to{left:120%}
+    }
+
+    .buttons{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-top:30px;
+    }
+
+    .btn{
+      min-width:190px;
+      padding:14px 24px;
+      background:transparent;
+      border:1px solid rgba(255,255,255,.18);
+      color:white;
+      text-transform:uppercase;
+      letter-spacing:2px;
+      font-size:13px;
+      cursor:pointer;
+      transition:.28s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn-hud{
+      color:var(--hud);
+      border-color:rgba(142,223,255,.48);
+      background:rgba(142,223,255,.08);
+    }
+
+    .btn-hud:hover{
+      background:rgba(142,223,255,.14);
+      box-shadow:0 0 22px rgba(142,223,255,.15);
+    }
+
+    .btn-gold{
+      color:var(--gold);
+      border-color:rgba(242,201,76,.48);
+      background:rgba(242,201,76,.08);
+    }
+
+    .btn-gold:hover{
+      background:rgba(242,201,76,.14);
+      box-shadow:0 0 22px rgba(242,201,76,.15);
+    }
+
+    .progress-wrap{
+      margin-top:24px;
+    }
+
+    .progress-header{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:var(--hud);
+      margin-bottom:10px;
+    }
+
+    .progress-bar{
+      width:100%;
+      height:14px;
+      border:1px solid rgba(142,223,255,.28);
+      background:rgba(255,255,255,.04);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .progress-fill{
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg, var(--hud), #dff8ff);
+      box-shadow:0 0 20px rgba(142,223,255,.32);
+      transition:width .15s linear;
+    }
+
+    .status{
+      margin-top:14px;
+      min-height:22px;
+      color:var(--ok);
+      font-size:14px;
+      letter-spacing:1px;
+    }
+
+    .message-section,
+    .final-section{
+      display:none;
+    }
+
+    .message-section.show,
+    .final-section.show{
+      display:flex;
+      animation:fadeIn .9s ease;
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(20px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .message-panel{
+      background:var(--panel-2);
+      border:1px solid rgba(242,201,76,.2);
+    }
+
+    .message-panel::before,
+    .message-panel::after{
+      border-color:var(--gold);
+    }
+
+    .message-text{
+      color:rgba(255,255,255,.9);
+      font-size:18px;
+      line-height:2;
+      white-space:pre-line;
+      min-height:280px;
+      margin-top:18px;
+    }
+
+    .signature{
+      margin-top:26px;
+      color:var(--gold);
+      font-style:italic;
+      font-size:18px;
+      opacity:0;
+      transform:translateY(8px);
+      transition:.7s ease;
+    }
+
+    .signature.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .final-card{
+      text-align:center;
+      background:var(--panel-2);
+      border:1px solid rgba(242,201,76,.22);
+    }
+
+    .sync-done{
+      margin-top:26px;
+      color:var(--gold);
+      text-transform:uppercase;
+      letter-spacing:4px;
+      font-size:12px;
+    }
+
+    .sync-done-bar{
+      width:min(290px,100%);
+      height:10px;
+      margin:12px auto 0;
+      border:1px solid rgba(242,201,76,.32);
+      background:rgba(255,255,255,.04);
+      overflow:hidden;
+    }
+
+    .sync-done-fill{
+      width:100%;
+      height:100%;
+      background:linear-gradient(90deg, #a77b19, var(--gold), #fff0a2);
+      box-shadow:0 0 18px rgba(242,201,76,.35);
+    }
+
+    /* Girasol */
+    .sunflower-scene{
+    position:relative;
+    width:320px;
+    height:430px;
+    transform-origin:bottom center;
+    transition:transform .15s ease-out;
+    cursor:pointer;
+    filter:drop-shadow(0 0 22px rgba(242,201,76,.08));
+    }
+
+    .sunflower-scene{
+      position:relative;
+      width:320px;
+      height:430px;
+      transform-origin:bottom center;
+      transition:transform .15s ease-out;
+      cursor:pointer;
+      filter:drop-shadow(0 0 22px rgba(242,201,76,.08));
+    }
+
+    .sunflower-glow{
+  position:absolute;
+  left:50%;
+  top:120px;
+  width:180px;
+  height:180px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(242,201,76,.24) 0%, rgba(242,201,76,.08) 35%, transparent 70%);
+  opacity:.35;
+  transition:.35s ease;
+  pointer-events:none;
+  z-index:0;
+}
+
+ .sunflower-head{
+  position:absolute;
+  left:50%;
+  top:120px;
+  width:190px;
+  height:190px;
+  transform:translateX(-50%);
+  z-index:3;
+}
+
+    .petals{
+  position:absolute;
+  inset:0;
+  z-index:3;
+}
+
+.petal{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:34px;
+  height:90px;
+  transform-origin:50% 78%;
+  margin-left:-17px;
+  margin-top:-80px;
+  border-radius:50% 50% 45% 45%;
+  background:linear-gradient(to bottom, #ffe98f 0%, #f3cc41 38%, #e2ad1d 100%);
+  box-shadow:
+    inset 0 0 8px rgba(255,255,255,.22),
+    0 0 10px rgba(242,201,76,.16);
+  transition:transform .25s ease, filter .25s ease;
+}
+
+.center-ring{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:108px;
+  height:108px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 30% 30%, #8a6021 0%, #704718 38%, #523112 62%, #3a220d 100%);
+  border:4px solid #8b5b1f;
+  box-shadow:
+    0 0 18px rgba(0,0,0,.35),
+    inset 0 0 8px rgba(255,255,255,.08);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  z-index:4;
+}
+
+.center-ring::before{
+  content:"";
+  position:absolute;
+  inset:10px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.08) 0%, transparent 55%),
+    repeating-radial-gradient(circle, rgba(20,10,2,.24) 0px, rgba(20,10,2,.24) 2px, transparent 3px, transparent 7px);
+  opacity:.9;
+}
+
+.center-core{
+  position:absolute;
+  width:62px;
+  height:62px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #a06d2b, #5c3514 70%, #331b0a 100%);
+  box-shadow:inset 0 0 8px rgba(255,255,255,.06);
+  z-index:5;
+}
+
+    .stem{
+  position:absolute;
+  left:50%;
+  top:205px;
+  width:18px;
+  height:185px;
+  transform:translateX(-50%);
+  border-radius:20px;
+  background:linear-gradient(to bottom, #3f8f3c 0%, #2d6f2f 45%, #214f23 100%);
+  box-shadow:inset -2px 0 2px rgba(255,255,255,.12);
+  z-index:1;
+}
+
+ .leaf{
+  position:absolute;
+  width:90px;
+  height:46px;
+  background:linear-gradient(to bottom right, #52a94a, #2a6d2f);
+  border-radius:0 100% 0 100%;
+  box-shadow:inset 0 0 8px rgba(255,255,255,.1);
+  z-index:1;
+}
+
+.leaf.left{
+  left:77px;
+  top:300px;
+  transform:rotate(-28deg);
+}
+
+.leaf.right{
+  right:77px;
+  top:332px;
+  transform:scaleX(-1) rotate(-18deg);
+}
+
+.leaf::after{
+  content:"";
+  position:absolute;
+  left:10%;
+  top:48%;
+  width:70%;
+  height:2px;
+  background:rgba(255,255,255,.18);
+  transform:rotate(18deg);
+  border-radius:2px;
+}
+
+    .ground{
+  position:absolute;
+  bottom:22px;
+  left:50%;
+  transform:translateX(-50%);
+  width:240px;
+  height:12px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(242,201,76,.25) 0%, rgba(242,201,76,.08) 45%, transparent 75%);
+  filter:blur(2px);
+  z-index:0;
+}
+.sunflower-zone{
+  margin:10px auto 14px;
+  width:100%;
+  min-height:430px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  position:relative;
+  user-select:none;
+}
+    .sunflower-scene.active .sunflower-glow,
+    .sunflower-scene:hover .sunflower-glow{
+      opacity:.75;
+      transform:translate(-50%,-50%) scale(1.08);
+    }
+
+    .sunflower-scene.active .petal,
+    .sunflower-scene:hover .petal{
+      filter:brightness(1.08);
+    }
+
+    .sunflower-hint{
+      margin-top:8px;
+      color:rgba(255,255,255,.7);
+      font-size:14px;
+      letter-spacing:1px;
+    }
+
+    .sunflower-note{
+      margin-top:18px;
+      color:var(--gold);
+      font-size:15px;
+      line-height:1.7;
+      letter-spacing:1px;
+      min-height:48px;
+      opacity:0;
+      transform:translateY(8px);
+      transition:.5s ease;
+    }
+
+    .sunflower-note.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    footer{
+      position:relative;
+      z-index:2;
+      text-align:center;
+      padding:24px 14px 34px;
+      color:rgba(255,255,255,.34);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:2px;
+    }
+
+    @media (max-width:700px){
+      .panel-content{
+        padding:22px;
+      }
+
+      .text,
+      .message-text{
+        font-size:16px;
+      }
+
+      .buttons{
+        flex-direction:column;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .message-text{
+        min-height:340px;
+      }
+
+      .sunflower-zone{
+        min-height:430px;
+      }
+
+      .sunflower-scene{
+        width:260px;
+        height:370px;
+      }
+
+      .sunflower-head{
+        width:165px;
+        height:165px;
+      }
+
+      .petal{
+        width:28px;
+        height:78px;
+        margin-left:-14px;
+        margin-top:-69px;
+      }
+
+      .center-ring{
+        width:94px;
+        height:94px;
+      }
+
+      .center-core{
+        width:54px;
+        height:54px;
+      }
+
+      .stem{
+        top:184px;
+        height:160px;
+      }
+
+      .leaf.left{
+        left:58px;
+        top:270px;
+      }
+
+      .leaf.right{
+        right:58px;
+        top:295px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="particles" id="particles"></div>
+  <div class="flowers" id="flowers"></div>
+
+  <!-- HERO -->
+  <section>
+    <div class="panel">
+      <div class="panel-content">
+        <div class="top-tags">
+          <div class="tag">Animus Interface</div>
+          <div class="tag">Memory Sequence // Gaby</div>
+          <div class="tag">Origin // Nacho</div>
+        </div>
+
+        <div class="label">Acceso a secuencia emocional</div>
+        <h1>Para <span class="gold">Gaby</span>,<br>de <span class="gold">Nacho</span></h1>
+
+        <div class="line"></div>
+
+        <p class="text">
+          He iniciado una secuencia distinta.
+          No una misión, no un recuerdo cualquiera, sino una memoria hecha para ti:
+          con flores amarillas, con sincronización y con un pequeño detalle guardado al final.
+        </p>
+
+        <div class="buttons">
+          <button class="btn btn-hud" onclick="goToSync()">Iniciar sincronización</button>
+          <button class="btn btn-gold" onclick="releaseFlowers()">Liberar flores</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SYNC -->
+  <section id="syncSection">
+    <div class="panel">
+      <div class="panel-content">
+        <div class="label">Secuencia de memoria</div>
+        <h2>Memoria sincronizada</h2>
+        <div class="line"></div>
+
+        <p class="text muted">
+          Reconstruyendo una pequeña secuencia dedicada a Gaby.
+          Integrando origen: Nacho.
+          Insertando flores amarillas y un mensaje de cariño.
+        </p>
+
+        <div class="buttons">
+          <button class="btn btn-hud" id="syncBtn" onclick="startSync()">Sincronizar memoria</button>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-header">
+            <span>Progreso</span>
+            <span id="progressPercent">0%</span>
+          </div>
+
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+
+          <div class="status" id="syncStatus">Esperando inicio de secuencia...</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENSAJE -->
+  <section class="message-section" id="messageSection">
+    <div class="panel message-panel">
+      <div class="panel-content">
+        <div class="label" style="color: var(--gold);">Mensaje recuperado</div>
+        <h2>Fragmento desbloqueado</h2>
+        <div class="line gold-line"></div>
+
+        <div class="message-text" id="messageText"></div>
+        <div class="signature" id="signature">— Nacho</div>
+
+        <div class="buttons">
+          <button class="btn btn-gold" onclick="showFinalSection()">Completar secuencia</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <section class="final-section" id="finalSection">
+    <div class="panel final-card">
+      <div class="panel-content">
+        <div class="label" style="color: var(--gold);">Secuencia completada</div>
+        <h2>Ofrenda sincronizada para <span class="gold">Gaby</span></h2>
+
+        <div class="line gold-line"></div>
+
+        <p class="text" style="margin: 0 auto;">
+          La memoria se ha completado.
+          Las flores amarillas han sido entregadas en forma de recuerdo,
+          y el último fragmento de la secuencia queda aquí:
+          un girasol que existe dentro de este pequeño mundo hecho para ti.
+        </p>
+
+        <div class="sync-done">Memoria sincronizada</div>
+        <div class="sync-done-bar">
+          <div class="sync-done-fill"></div>
+        </div>
+
+        <div class="sunflower-zone">
+          <div class="sunflower-scene" id="sunflowerScene">
+            <div class="sunflower-glow"></div>
+
+            <div class="ground"></div>
+
+            <div class="stem"></div>
+            <div class="leaf left"></div>
+            <div class="leaf right"></div>
+
+            <div class="sunflower-head">
+                <div class="petals" id="petals"></div>
+                <div class="center-ring" id="sunCenter">
+                <div class="center-core"></div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="sunflower-hint">
+          Mueve el cursor cerca del girasol y haz clic en su centro.
+        </div>
+
+        <div class="sunflower-note" id="sunflowerNote">
+          FRAGMENTO REVELADO // Para Gaby: que tus días sigan teniendo luz, color y motivos bonitos para sonreír. — Nacho
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Memory Sequence Completed
+  </footer>
+
+  <script>
+    const particlesContainer = document.getElementById("particles");
+    const flowersContainer = document.getElementById("flowers");
+    const progressFill = document.getElementById("progressFill");
+    const progressPercent = document.getElementById("progressPercent");
+    const syncStatus = document.getElementById("syncStatus");
+    const syncBtn = document.getElementById("syncBtn");
+    const messageSection = document.getElementById("messageSection");
+    const messageText = document.getElementById("messageText");
+    const signature = document.getElementById("signature");
+    const finalSection = document.getElementById("finalSection");
+    const petalsContainer = document.getElementById("petals");
+    const sunflowerScene = document.getElementById("sunflowerScene");
+    const sunCenter = document.getElementById("sunCenter");
+    const sunflowerNote = document.getElementById("sunflowerNote");
+
+    let syncing = false;
+
+    const fullMessage = `Gaby,
+
+He reconstruido esta secuencia para ti.
+
+No quería que este detalle fuera solo un mensaje común,
+sino una pequeña memoria con la estética de algo especial,
+como si quedara guardada dentro de una sincronización.
+
+Hoy, entre todas las posibilidades,
+elegí flores amarillas.
+
+Porque hay personas que hacen que ciertos momentos
+se sientan más claros,
+más bonitos
+y más dignos de recordarse.
+
+Y si esta secuencia tenía que conservar un fragmento importante,
+quería que fuera este:
+
+que este detalle es para ti,
+con cariño.
+
+`;
+
+    function createParticles() {
+      for (let i = 0; i < 26; i++) {
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.top = Math.random() * 100 + "vh";
+        p.style.animationDuration = (8 + Math.random() * 8) + "s";
+        p.style.animationDelay = (Math.random() * 6) + "s";
+        p.style.opacity = .3 + Math.random() * .7;
+        particlesContainer.appendChild(p);
+      }
+    }
+
+    function createFlowerParticle() {
+      const f = document.createElement("div");
+      f.className = "flower-particle";
+      f.style.left = Math.random() * 100 + "vw";
+      f.style.animationDuration = (8 + Math.random() * 6) + "s";
+      f.style.transform = `scale(${0.8 + Math.random() * 0.8})`;
+      flowersContainer.appendChild(f);
+
+      setTimeout(() => f.remove(), 15000);
+    }
+
+    function releaseFlowers() {
+      for (let i = 0; i < 18; i++) {
+        setTimeout(createFlowerParticle, i * 120);
+      }
+    }
+
+    setInterval(() => {
+      if (Math.random() > .68) createFlowerParticle();
+    }, 1400);
+
+    function goToSync() {
+      document.getElementById("syncSection").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function startSync() {
+      if (syncing) return;
+      syncing = true;
+
+      syncBtn.disabled = true;
+      syncBtn.style.opacity = ".55";
+      syncBtn.style.cursor = "default";
+
+      const statusMessages = [
+        "Estableciendo enlace con la secuencia...",
+        "Recuperando fragmentos de memoria...",
+        "Validando origen // Nacho...",
+        "Identificando destino // Gaby...",
+        "Insertando flores amarillas...",
+        "Ajustando sincronización emocional...",
+        "Secuencia reconstruida."
+      ];
+
+      let progress = 0;
+      let statusIndex = 0;
+
+      syncStatus.textContent = statusMessages[0];
+
+      const interval = setInterval(() => {
+        progress += Math.floor(Math.random() * 6) + 2;
+        if (progress > 100) progress = 100;
+
+        progressFill.style.width = progress + "%";
+        progressPercent.textContent = progress + "%";
+
+        if (statusIndex < statusMessages.length - 1 && progress > (statusIndex + 1) * 14) {
+          statusIndex++;
+          syncStatus.textContent = statusMessages[statusIndex];
+        }
+
+        if (progress === 100) {
+          clearInterval(interval);
+          syncStatus.textContent = "Memoria sincronizada al 100%.";
+          releaseFlowers();
+
+          setTimeout(() => {
+            showMessageSection();
+          }, 850);
+        }
+      }, 180);
+    }
+
+    function showMessageSection() {
+      messageSection.classList.add("show");
+      messageSection.scrollIntoView({ behavior: "smooth" });
+
+      typeWriter(fullMessage, messageText, 17, () => {
+        signature.classList.add("show");
+      });
+    }
+
+    function typeWriter(text, element, speed, callback) {
+      let i = 0;
+      element.innerHTML = "";
+
+      function write() {
+        if (i < text.length) {
+          const char = text.charAt(i);
+          element.innerHTML += char === "\n" ? "<br>" : char;
+          i++;
+          setTimeout(write, speed);
+        } else if (callback) {
+          callback();
+        }
+      }
+
+      write();
+    }
+
+    function showFinalSection() {
+      finalSection.classList.add("show");
+      finalSection.scrollIntoView({ behavior: "smooth" });
+      releaseFlowers();
+    }
+
+    function createSunflower() {
+      const totalPetals = 18;
+      for (let i = 0; i < totalPetals; i++) {
+        const petal = document.createElement("div");
+        petal.className = "petal";
+        const angle = (360 / totalPetals) * i;
+        petal.style.transform = `rotate(${angle}deg) translateY(-54px)`;
+        petalsContainer.appendChild(petal);
+      }
+    }
+
+    function animatePetals(expanded = false) {
+      const petals = document.querySelectorAll(".petal");
+      petals.forEach((petal, i) => {
+        const total = petals.length;
+        const angle = (360 / total) * i;
+        const distance = expanded ? -62 : -54;
+        petal.style.transform = `rotate(${angle}deg) translateY(${distance}px)`;
+      });
+    }
+
+    // Interacción con el girasol
+    sunflowerScene.addEventListener("mouseenter", () => {
+      sunflowerScene.classList.add("active");
+      animatePetals(true);
+    });
+
+    sunflowerScene.addEventListener("mouseleave", () => {
+      sunflowerScene.classList.remove("active");
+      animatePetals(false);
+      sunflowerScene.style.transform = "rotate(0deg)";
+    });
+
+    sunflowerScene.addEventListener("mousemove", (e) => {
+      const rect = sunflowerScene.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const diffX = e.clientX - centerX;
+      const rotate = Math.max(-6, Math.min(6, diffX / 22));
+      sunflowerScene.style.transform = `rotate(${rotate}deg)`;
+    });
+
+    sunCenter.addEventListener("click", () => {
+      sunflowerScene.classList.add("active");
+      animatePetals(true);
+      sunflowerNote.classList.add("show");
+      releaseFlowers();
+    });
+
+    createParticles();
+    createSunflower();
+  </script>
+</body>
+</html>
